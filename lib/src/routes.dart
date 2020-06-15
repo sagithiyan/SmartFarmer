@@ -13,13 +13,29 @@ abstract class Routes{
       case "/":
         return MaterialPageRoute(builder: (context)=>Landing());
         break;
-      case"/signup":
+      case "/signup":
         return MaterialPageRoute(builder: (context)=>Signup());
         break;
       case "/login" :
           return MaterialPageRoute(builder: (context)=>Login());
       default:
           return MaterialPageRoute(builder: (context)=>Login());
+    }
+  }
+
+  static CupertinoPageRoute cupertinoRoutes(RouteSettings settings){
+
+    switch(settings.name){
+      case "/":
+        return CupertinoPageRoute(builder: (context)=>Landing());
+        break;
+      case"/signup":
+        return CupertinoPageRoute(builder: (context)=>Signup());
+        break;
+      case "/login" :
+        return CupertinoPageRoute(builder: (context)=>Login());
+      default:
+        return CupertinoPageRoute(builder: (context)=>Login());
     }
   }
 
