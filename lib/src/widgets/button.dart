@@ -16,13 +16,13 @@ class AppButton extends StatelessWidget {
     Color buttonColor;
 
     switch (buttonType) {
-      case ButtonType.Straw:
+      case ButtonType.black:
         fontStyle = TextStyles.buttonTextLight;
         buttonColor = AppColors.black;
         break;
-      case ButtonType.LightBlue:
+      case ButtonType.DarkBlue:
         fontStyle = TextStyles.buttonTextLight;
-        buttonColor = AppColors.lightblue;
+        buttonColor = AppColors.darkblue;
         break;
       case ButtonType.DarkBlue:
         fontStyle = TextStyles.buttonTextLight;
@@ -38,7 +38,7 @@ class AppButton extends StatelessWidget {
         break;
       default:
         fontStyle = TextStyles.buttonTextLight;
-        buttonColor = AppColors.lightblue;
+        buttonColor = AppColors.darkblue;
         break;
     }
 
@@ -61,4 +61,4 @@ class AppButton extends StatelessWidget {
   }
 }
 
-enum ButtonType { LightBlue, Straw, LightGray, DarkGray, DarkBlue }
+enum ButtonType { LightBlue, black, LightGray, DarkGray, DarkBlue }

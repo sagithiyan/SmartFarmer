@@ -87,7 +87,7 @@ class Login extends StatelessWidget {
         ),
         AppButton(
           buttonText: 'Login',
-          buttonType: ButtonType.LightBlue,
+          buttonType: ButtonType.DarkBlue,
         ),
         Center(
           child: Text('Or', style: TextStyles.suggestion),
