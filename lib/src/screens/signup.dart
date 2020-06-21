@@ -20,16 +20,16 @@ class Signup extends StatelessWidget {
     return Center(
         child: (Platform.isIOS)
             ? CupertinoButton(
-          child: Text('Login'),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, "/login");
-          },
-        )
+                child: Text('Login'),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, "/login");
+                },
+              )
             : RaisedButton(
-          child: Text('Login'),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, "/login");
-          },
-        ));
+                child: Text('Login'),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, "/login");
+                },
+              ));
   }
 }

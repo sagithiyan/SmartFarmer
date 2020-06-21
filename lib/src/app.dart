@@ -15,11 +15,16 @@ class PlatformApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
-      return CupertinoApp();
+      return CupertinoApp(
+        home: Login(),
+        onGenerateRoute: Routes.cupertinoRoutes,
+        theme: CupertinoThemeData(scaffoldBackgroundColor: Colors.white),
+      );
     } else {
       return MaterialApp(
         home: Login(),
-        onGenerateRoute: Routes.cupertinoRoutes,
+        onGenerateRoute: Routes.materialRoutes,
+        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       );
     }
   }
