@@ -9,6 +9,8 @@ class AppTextField extends StatelessWidget {
   final IconData cupertinoIcon;
   final TextInputType textInputType;
   final bool obscureText;
+  final void Function(String) onChanged;
+  final String errorText;
 
   AppTextField(
       {@required this.isIOS,
@@ -16,7 +18,10 @@ class AppTextField extends StatelessWidget {
       @required this.cupertinoIcon,
       @required this.materialIcon,
       this.textInputType,
-      this.obscureText});
+      this.obscureText,
+      this.onChanged,
+        this.errorText,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +56,9 @@ class AppTextField extends StatelessWidget {
           style: TextFieldStyles.text,
           textAlign: TextFieldStyles.textAlign,
           decoration:
-              TextFieldStyles.materialDecoration(hintText, materialIcon),
+              TextFieldStyles.materialDecoration(hintText, materialIcon,errorText),
           obscureText: (obscureText != null) ? obscureText : false,
+          onChanged: onChanged,
         ),
       );
     }

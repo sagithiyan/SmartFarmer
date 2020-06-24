@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/gestures.dart';
+import 'package:provider/provider.dart';
+import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/styles/base.dart';
 import 'package:smartfarmer/src/styles/text.dart';
 import 'package:smartfarmer/src/styles/textfields.dart';
@@ -14,18 +16,20 @@ import 'package:smartfarmer/src/widgets/button.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authBloc=Provider.of<AuthBloc>(context);
+
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
-        child: pageBody(context),
+        child: pageBody(context,authBloc),
       );
     } else {
       return Scaffold(
-        body: pageBody(context),
+        body: pageBody(context,authBloc),
       );
     }
   }
 
-  Widget pageBody(BuildContext context) {
+  Widget pageBody(BuildContext context,AuthBloc authBloc) {
     return ListView(
       children: <Widget>[
 //        ClipPath(
@@ -69,21 +73,35 @@ class Login extends StatelessWidget {
             image: DecorationImage(image: AssetImage('assets/images/fra.jpg')),
           ),
         ),
-        AppTextField(
-          isIOS: Platform.isIOS,
-          hintText: 'Email',
-          cupertinoIcon: CupertinoIcons.mail_solid,
-          materialIcon: Icons.email,
-          textInputType: TextInputType.emailAddress,
+        StreamBuilder<String>(
+          stream: authBloc.email,
+          builder: (context, snapshot) {
+            return AppTextField(
+              isIOS: Platform.isIOS,
+              hintText: 'Email',
+              cupertinoIcon: CupertinoIcons.mail_solid,
+              materialIcon: Icons.email,
+              textInputType: TextInputType.emailAddress,
+              errorText: snapshot.error,
+              onChanged: authBloc.changeEmail,
+            );
+          }
         ),
-        AppTextField(
-          isIOS: Platform.isIOS,
-          hintText: 'Password',
-          cupertinoIcon: IconData(0xf4c9,
-              fontFamily: CupertinoIcons.iconFont,
-              fontPackage: CupertinoIcons.iconFontPackage),
-          materialIcon: Icons.lock,
-          obscureText: true,
+        StreamBuilder<String>(
+          stream: authBloc.password,
+          builder: (context, snapshot) {
+            return AppTextField(
+              isIOS: Platform.isIOS,
+              hintText: 'Password',
+              cupertinoIcon: IconData(0xf4c9,
+                  fontFamily: CupertinoIcons.iconFont,
+                  fontPackage: CupertinoIcons.iconFontPackage),
+              materialIcon: Icons.lock,
+              obscureText: true,
+              errorText: snapshot.error,
+              onChanged: authBloc.changePassword,
+            );
+          }
         ),
         AppButton(
           buttonText: 'Login',
@@ -109,7 +127,7 @@ class Login extends StatelessWidget {
           child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                  text: 'New Here? ',
+                  text: 'Create an Account? ',
                   style: TextStyles.body,
                   children: [
                     TextSpan(

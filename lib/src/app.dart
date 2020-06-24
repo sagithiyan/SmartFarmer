@@ -1,13 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/routes.dart';
 import 'screens/login.dart';
 import 'dart:io';
 
+final authBloc=AuthBloc();
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PlatformApp();
+    return MultiProvider(
+        providers: [
+          Provider(create: (context)=>authBloc)
+
+        ],
+        child: PlatformApp());
   }
 }
 
