@@ -16,20 +16,20 @@ import 'package:smartfarmer/src/widgets/button.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authBloc=Provider.of<AuthBloc>(context);
+    final authBloc = Provider.of<AuthBloc>(context);
 
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
-        child: pageBody(context,authBloc),
+        child: pageBody(context, authBloc),
       );
     } else {
       return Scaffold(
-        body: pageBody(context,authBloc),
+        body: pageBody(context, authBloc),
       );
     }
   }
 
-  Widget pageBody(BuildContext context,AuthBloc authBloc) {
+  Widget pageBody(BuildContext context, AuthBloc authBloc) {
     return ListView(
       children: <Widget>[
 //        ClipPath(
@@ -68,45 +68,49 @@ class Login extends StatelessWidget {
           ),
         ),
         Container(
-          height: 200.0,
+          height: 180.0,
           decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage('assets/images/fra.jpg')),
           ),
         ),
         StreamBuilder<String>(
-          stream: authBloc.email,
-          builder: (context, snapshot) {
-            return AppTextField(
-              isIOS: Platform.isIOS,
-              hintText: 'Email',
-              cupertinoIcon: CupertinoIcons.mail_solid,
-              materialIcon: Icons.email,
-              textInputType: TextInputType.emailAddress,
-              errorText: snapshot.error,
-              onChanged: authBloc.changeEmail,
-            );
-          }
-        ),
+            stream: authBloc.email,
+            builder: (context, snapshot) {
+              return AppTextField(
+                isIOS: Platform.isIOS,
+                hintText: 'Email',
+                cupertinoIcon: CupertinoIcons.mail_solid,
+                materialIcon: Icons.email,
+                textInputType: TextInputType.emailAddress,
+                errorText: snapshot.error,
+                onChanged: authBloc.changeEmail,
+              );
+            }),
         StreamBuilder<String>(
-          stream: authBloc.password,
-          builder: (context, snapshot) {
-            return AppTextField(
-              isIOS: Platform.isIOS,
-              hintText: 'Password',
-              cupertinoIcon: IconData(0xf4c9,
-                  fontFamily: CupertinoIcons.iconFont,
-                  fontPackage: CupertinoIcons.iconFontPackage),
-              materialIcon: Icons.lock,
-              obscureText: true,
-              errorText: snapshot.error,
-              onChanged: authBloc.changePassword,
-            );
-          }
-        ),
-        AppButton(
-          buttonText: 'Login',
-          buttonType: ButtonType.DarkBlue,
-        ),
+            stream: authBloc.password,
+            builder: (context, snapshot) {
+              return AppTextField(
+                isIOS: Platform.isIOS,
+                hintText: 'Password',
+                cupertinoIcon: IconData(0xf4c9,
+                    fontFamily: CupertinoIcons.iconFont,
+                    fontPackage: CupertinoIcons.iconFontPackage),
+                materialIcon: Icons.lock,
+                obscureText: true,
+                errorText: snapshot.error,
+                onChanged: authBloc.changePassword,
+              );
+            }),
+        StreamBuilder<bool>(
+            stream: authBloc.isValid,
+            builder: (context, snapshot) {
+              return AppButton(
+                buttonText: 'Login',
+                buttonType: (snapshot.data == true)
+                    ? ButtonType.DarkBlue
+                    : ButtonType.Disabled,
+              );
+            }),
         Center(
           child: Text('Or', style: TextStyles.suggestion),
         ),

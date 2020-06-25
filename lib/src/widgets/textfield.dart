@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smartfarmer/src/styles/textfields.dart';
+import 'package:smartfarmer/src/styles/text.dart';
 
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   final bool isIOS;
   final String hintText;
   final IconData materialIcon;
@@ -24,24 +25,71 @@ class AppTextField extends StatelessWidget {
       });
 
   @override
+  _AppTextFieldState createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  FocusNode _node;
+  bool displayCupertinoErrorBorder;
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    _node=FocusNode();
+    _controller=TextEditingController();
+    _node.addListener(_handleFocusChange);
+   displayCupertinoErrorBorder=false;
+    super.initState();
+  }
+
+  void _handleFocusChange(){
+  if(_node.hasFocus==false && widget.errorText !=null){
+    displayCupertinoErrorBorder=true;
+  }else{
+    displayCupertinoErrorBorder=false;
+  }
+  widget.onChanged(_controller.text);
+  }
+@override
+  void dispose() {
+    _node.removeListener(_handleFocusChange);
+    _node.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (isIOS) {
+    if (widget.isIOS) {
       return Padding(
         padding: EdgeInsets.symmetric(
             horizontal: TextFieldStyles.textBoxHorizontal,
             vertical: TextFieldStyles.textBoxVertical),
-        child: CupertinoTextField(
-          keyboardType:
-              (textInputType != null) ? textInputType : TextInputType.text,
-          padding: EdgeInsets.all(12.0),
-          placeholder: hintText,
-          placeholderStyle: TextFieldStyles.placeholder,
-          style: TextFieldStyles.text,
-          textAlign: TextFieldStyles.textAlign,
-          cursorColor: TextFieldStyles.cursorColor,
-          decoration: TextFieldStyles.cupertinoDecoration,
-          prefix: TextFieldStyles.iconPrefix(cupertinoIcon),
-          obscureText: (obscureText != null) ? obscureText : false,
+        child: Column(
+          children: [
+            CupertinoTextField(
+              keyboardType:
+                  (widget.textInputType != null) ? widget.textInputType : TextInputType.text,
+              padding: EdgeInsets.all(12.0),
+              placeholder: widget.hintText,
+              placeholderStyle: TextFieldStyles.placeholder,
+              style: TextFieldStyles.text,
+              textAlign: TextFieldStyles.textAlign,
+              cursorColor: TextFieldStyles.cursorColor,
+              decoration:(displayCupertinoErrorBorder)?TextFieldStyles.cupertinoEroorDecoration: TextFieldStyles.cupertinoDecoration,
+              prefix: TextFieldStyles.iconPrefix(widget.cupertinoIcon),
+              obscureText: (widget.obscureText != null) ? widget.obscureText : false,
+              onChanged: widget.onChanged,
+              focusNode: _node,
+              controller: _controller,
+            ),
+            (widget.errorText!=null)? Padding(
+              padding: const EdgeInsets.only(top: 5.0,left: 10.0),
+              child: Row(children: <Widget>[
+                Text(widget.errorText,style: TextStyles.error,)
+              ],),
+            ) :Container()
+          ],
         ),
       );
     } else {
@@ -51,14 +99,14 @@ class AppTextField extends StatelessWidget {
             vertical: TextFieldStyles.textBoxVertical),
         child: TextField(
           keyboardType:
-              (textInputType != null) ? textInputType : TextInputType.text,
+              (widget.textInputType != null) ? widget.textInputType : TextInputType.text,
           cursorColor: TextFieldStyles.cursorColor,
           style: TextFieldStyles.text,
           textAlign: TextFieldStyles.textAlign,
           decoration:
-              TextFieldStyles.materialDecoration(hintText, materialIcon,errorText),
-          obscureText: (obscureText != null) ? obscureText : false,
-          onChanged: onChanged,
+              TextFieldStyles.materialDecoration(widget.hintText, widget.materialIcon,widget.errorText),
+          obscureText: (widget.obscureText != null) ? widget.obscureText : false,
+          onChanged: widget.onChanged,
         ),
       );
     }
