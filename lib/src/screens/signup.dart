@@ -91,6 +91,7 @@ class Signup extends StatelessWidget {
                 buttonType: (snapshot.data == true)
                     ? ButtonType.DarkBlue
                     : ButtonType.Disabled,
+                onPressed: authBloc.signupEmail,
               );
             }),
         Center(

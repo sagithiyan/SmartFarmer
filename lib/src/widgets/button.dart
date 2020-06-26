@@ -7,8 +7,9 @@ import 'package:smartfarmer/src/styles/colors.dart';
 class AppButton extends StatefulWidget {
   final String buttonText;
   final ButtonType buttonType;
+  final void Function() onPressed;
 
-  AppButton({@required this.buttonText, this.buttonType});
+  AppButton({@required this.buttonText, this.buttonType,this.onPressed});
 
   @override
   _AppButtonState createState() => _AppButtonState();
@@ -82,7 +83,7 @@ class _AppButtonState extends State<AppButton> {
         } ,
         onTap: (){
           if(widget.buttonType !=ButtonType.Disabled){
-
+          widget.onPressed();
           }
         },
       ),
