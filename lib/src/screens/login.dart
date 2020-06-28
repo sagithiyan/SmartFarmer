@@ -13,7 +13,21 @@ import 'package:smartfarmer/src/widgets/social_button.dart';
 import 'package:smartfarmer/src/widgets/textfield.dart';
 import 'package:smartfarmer/src/widgets/button.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  @override
+  void initState() {
+    final authBloc = Provider.of<AuthBloc>(context, listen: false);
+    authBloc.user.listen((user) {
+      if (user != null) Navigator.pushReplacementNamed(context, '/landing');
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authBloc = Provider.of<AuthBloc>(context);
@@ -109,6 +123,7 @@ class Login extends StatelessWidget {
                 buttonType: (snapshot.data == true)
                     ? ButtonType.DarkBlue
                     : ButtonType.Disabled,
+                onPressed: authBloc.loginEmail,
               );
             }),
         Center(

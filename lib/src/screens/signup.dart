@@ -13,22 +13,36 @@ import 'package:smartfarmer/src/widgets/social_button.dart';
 import 'package:smartfarmer/src/widgets/textfield.dart';
 import 'package:smartfarmer/src/widgets/button.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
+  @override
+  _SignupState createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  @override
+  void initState() {
+    final authBloc = Provider.of<AuthBloc>(context, listen: false);
+    authBloc.user.listen((user) {
+      if (user != null) Navigator.pushReplacementNamed(context, '/landing');
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authBloc = Provider.of<AuthBloc>(context);
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
-        child: pageBody(context,authBloc),
+        child: pageBody(context, authBloc),
       );
     } else {
       return Scaffold(
-        body: pageBody(context,authBloc),
+        body: pageBody(context, authBloc),
       );
     }
   }
 
-  Widget pageBody(BuildContext context,AuthBloc authBloc) {
+  Widget pageBody(BuildContext context, AuthBloc authBloc) {
     return ListView(
       children: <Widget>[
         Container(
