@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/routes.dart';
 import 'package:smartfarmer/src/screens/landing.dart';
+import 'package:smartfarmer/src/styles/colors.dart';
+import 'package:smartfarmer/src/styles/text.dart';
 import 'screens/login.dart';
 import 'dart:io';
 
@@ -41,7 +43,13 @@ class PlatformApp extends StatelessWidget {
               ? loadingScreen(true)
               : (isLoggedIn == true) ? Landing() : Login(),
           onGenerateRoute: Routes.cupertinoRoutes,
-          theme: CupertinoThemeData(scaffoldBackgroundColor: Colors.white));
+          theme: CupertinoThemeData(
+              primaryColor: AppColors.black,
+              scaffoldBackgroundColor: Colors.white,
+              textTheme: CupertinoTextThemeData(
+                tabLabelTextStyle: TextStyles.suggestion
+              )
+          ));
     } else {
       return MaterialApp(
           home: (isLoggedIn == null)

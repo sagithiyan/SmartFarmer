@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smartfarmer/src/screens/landing.dart';
 import 'package:smartfarmer/src/screens/login.dart';
 import 'package:smartfarmer/src/screens/signup.dart';
+import 'package:smartfarmer/src/screens/vendor.dart';
 
 abstract class Routes {
   static MaterialPageRoute materialRoutes(RouteSettings settings) {
@@ -13,6 +14,8 @@ abstract class Routes {
         return MaterialPageRoute(builder: (context) => Signup());
       case "/login":
         return MaterialPageRoute(builder: (context) => Login());
+      case "/vendor":
+        return MaterialPageRoute(builder: (context) => Vendor());
       default:
         return MaterialPageRoute(builder: (context) => Login());
     }
@@ -26,6 +29,8 @@ abstract class Routes {
         return CupertinoPageRoute(builder: (context) => Signup());
       case "/login":
         return CupertinoPageRoute(builder: (context) => Login());
+      case "/vendor":
+        return CupertinoPageRoute(builder: (context) => Vendor());
       default:
         return CupertinoPageRoute(builder: (context) => Login());
     }
