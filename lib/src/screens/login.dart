@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -14,18 +16,27 @@ import 'package:smartfarmer/src/widgets/textfield.dart';
 import 'package:smartfarmer/src/widgets/button.dart';
 
 class Login extends StatefulWidget {
+  StreamSubscription _userSubscription;
+
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+
   @override
   void initState() {
-    final authBloc = Provider.of<AuthBloc>(context, listen: false);
-    authBloc.user.listen((user) {
+    final authBloc = Provider.of<AuthBloc>(context,listen: false);
+    widget._userSubscription = authBloc.user.listen((user) {
       if (user != null) Navigator.pushReplacementNamed(context, '/landing');
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget._userSubscription.cancel();
+    super.dispose();
   }
 
   @override
