@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -9,11 +11,16 @@ import 'package:smartfarmer/src/styles/text.dart';
 import 'package:smartfarmer/src/styles/textfields.dart';
 import 'package:smartfarmer/src/styles/colors.dart';
 import 'package:smartfarmer/src/styles/buttons.dart';
+import 'package:smartfarmer/src/widgets/alert.dart';
 import 'package:smartfarmer/src/widgets/social_button.dart';
 import 'package:smartfarmer/src/widgets/textfield.dart';
 import 'package:smartfarmer/src/widgets/button.dart';
 
 class Signup extends StatefulWidget {
+
+  StreamSubscription _userSubscription;
+  StreamSubscription _errorMessageSubscription;
+
   @override
   _SignupState createState() => _SignupState();
 }
@@ -22,10 +29,25 @@ class _SignupState extends State<Signup> {
   @override
   void initState() {
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
-    authBloc.user.listen((user) {
+    widget._userSubscription=authBloc.user.listen((user) {
       if (user != null) Navigator.pushReplacementNamed(context, '/landing');
     });
+
+    widget._errorMessageSubscription =
+        authBloc.errorMessage.listen((errorMessage) {
+          if (errorMessage != '') {
+            AppAlerts.showErrorDialog(Platform.isIOS, context, errorMessage)
+                .then((_) => authBloc.clearErrorMessage());
+          }
+        });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget._userSubscription.cancel();
+    widget._errorMessageSubscription.cancel();
+    super.dispose();
   }
 
   @override
