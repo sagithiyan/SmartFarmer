@@ -10,7 +10,7 @@ abstract class BaseStyles {
 
   static double get listFieldVertical => 8.0;
 
-  static double get animationOffset =>2.0;
+  static double get animationOffset => 2.0;
 
   static EdgeInsets get listPadding {
     return EdgeInsets.symmetric(
@@ -26,6 +26,7 @@ abstract class BaseStyles {
       )
     ];
   }
+
   static List<BoxShadow> get boxShadowPressed {
     return [
       BoxShadow(
@@ -34,5 +35,12 @@ abstract class BaseStyles {
         blurRadius: 1.0,
       )
     ];
+  }
+
+  static Widget iconPrefix(IconData icon) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Icon(icon, size: 35.0, color: AppColors.darkblue),
+    );
   }
 }

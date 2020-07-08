@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:smartfarmer/src/styles/colors.dart';
+
 class Products extends StatelessWidget{
 
   @override
@@ -13,6 +15,11 @@ class Products extends StatelessWidget{
     } else {
       return Scaffold(
         body: pageBody(),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColors.black,
+          child: Icon(Icons.add),
+          onPressed: ()=>Navigator.of(context).pushNamed('/editproduct'),
+        ),
       );
     }
   }

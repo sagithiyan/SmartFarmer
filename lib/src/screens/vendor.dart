@@ -20,9 +20,9 @@ class Vendor extends StatefulWidget {
 
   static TabBar get vendorTabBar {
     return TabBar(
-      unselectedLabelColor: TabBarStyles.unselectedLabelColor ,
-      labelColor: TabBarStyles.labelColor ,
-      indicatorColor: TabBarStyles.indicatorColor ,
+      unselectedLabelColor: TabBarStyles.unselectedLabelColor,
+      labelColor: TabBarStyles.labelColor,
+      indicatorColor: TabBarStyles.indicatorColor,
       tabs: <Widget>[
         Tab(icon: Icon(Icons.list)),
         Tab(icon: Icon(Icons.shopping_cart)),
@@ -33,13 +33,14 @@ class Vendor extends StatefulWidget {
 }
 
 class _VendorState extends State<Vendor> {
-
   @override
   void initState() {
-    Future.delayed(Duration.zero, (){
-      var authBloc = Provider.of<AuthBloc>(context,listen: false);
+    Future.delayed(Duration.zero, () {
+      var authBloc = Provider.of<AuthBloc>(context, listen: false);
       widget._userSubscription = authBloc.user.listen((user) {
-        if (user == null) Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+        if (user == null)
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/login', (route) => false);
       });
     });
 
@@ -54,13 +55,14 @@ class _VendorState extends State<Vendor> {
 
   @override
   Widget build(BuildContext context) {
-
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
         child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
-            return <Widget> [
-              AppNavbar.cupertinoNavBar(title: 'Vendor Sachin', context:context),
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              AppNavbar.cupertinoNavBar(
+                title: 'Vendor Sachin',
+              ),
             ];
           },
           body: VendorScaffold.cupertinoTabScaffold,
@@ -71,18 +73,20 @@ class _VendorState extends State<Vendor> {
         length: 3,
         child: Scaffold(
             body: NestedScrollView(
-                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
-                  return <Widget> [
-                    AppNavbar.materialNavBar(title: 'Vendor  Sachin', tabBar: Vendor.vendorTabBar)
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    AppNavbar.materialNavBar(
+                        title: 'Vendor  Sachin', tabBar: Vendor.vendorTabBar)
                   ];
                 },
-                body: TabBarView(children: <Widget>[
-                  Products(),
-                  Orders(),
-                  Profile(),
-                ],)
-            )
-        ),
+                body: TabBarView(
+                  children: <Widget>[
+                    Products(),
+                    Orders(),
+                    Profile(),
+                  ],
+                ))),
       );
     }
   }

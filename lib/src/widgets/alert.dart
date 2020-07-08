@@ -12,7 +12,7 @@ abstract class AppAlerts {
               return CupertinoAlertDialog(
                 title: Text(
                   'Error',
-                  style: TextStyles.subtitle,
+                  style: TextStyles.erroralert,
                 ),
                 content: SingleChildScrollView(
                   child: ListBody(
@@ -39,7 +39,7 @@ abstract class AppAlerts {
               return AlertDialog(
                 title: Text(
                   'Error',
-                  style: TextStyles.subtitle,
+                  style: TextStyles.erroralert,
                 ),
                 content: SingleChildScrollView(
                   child: ListBody(
