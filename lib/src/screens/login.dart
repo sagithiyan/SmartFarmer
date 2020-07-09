@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/gestures.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/styles/base.dart';
@@ -83,30 +84,33 @@ class _LoginState extends State<Login> {
 //            ),
 //          ),
 //        ),
-        Container(
-          height: MediaQuery.of(context).size.height * .2,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/images.jpg'),
-                  fit: BoxFit.fill)),
-        ),
+//        Container(
+//          height: MediaQuery.of(context).size.height * .2,
+//          decoration: BoxDecoration(
+//              image: DecorationImage(
+//                  image: AssetImage('assets/images/images.jpg'),
+//                  fit: BoxFit.fill)),
+//        ),
+        SizedBox(height: 50),
         Container(
           child: Center(
             child: Text(
-              "FARMERLY",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  fontStyle: FontStyle.italic),
+              "Farmerly",
+              style: GoogleFonts.pinyonScript(
+                fontWeight: FontWeight.bold,
+                fontSize: 70,
+              ),
             ),
           ),
         ),
+        SizedBox(height: 20),
         Container(
           height: 180.0,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/images/fra.jpg')),
+            image: DecorationImage(image: AssetImage('assets/images/i.png')),
           ),
         ),
+        SizedBox(height: 10),
         StreamBuilder<String>(
             stream: authBloc.email,
             builder: (context, snapshot) {

@@ -14,9 +14,9 @@ class AppDropdownButton extends StatelessWidget {
 
   AppDropdownButton(
       {@required this.items,
-      @required this.hintText,
-      this.materialIcon,
-      this.cupertinoIcon});
+        @required this.hintText,
+        this.materialIcon,
+        this.cupertinoIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +36,15 @@ class AppDropdownButton extends StatelessWidget {
                   width: 35.0, child: BaseStyles.iconPrefix(materialIcon)),
               Expanded(
                 child: Center(
-                  child: DropdownButton<String>(
-                    items: buildMaterialItems(items),
-                    value: null,
-                    hint: Text(hintText, style: TextStyles.suggestion),
-                    style: TextStyles.picker,
-                    underline: Container(),
-                    iconEnabledColor: AppColors.black,
-                    onChanged: (value) {},
-                  ),
-                ),
+                    child: GestureDetector(
+                      child: Text(hintText, style: TextStyles.suggestion),
+                      onTap: () {
+                        showCupertinoModalPopup(
+                            context: context, builder: (BuildContext context) {
+                          return _selectIOS(context, items);
+                        });
+                      },
+                    )),
               ),
             ],
           ),
@@ -67,17 +66,14 @@ class AppDropdownButton extends StatelessWidget {
                   width: 35.0, child: BaseStyles.iconPrefix(materialIcon)),
               Expanded(
                 child: Center(
-                  child: GestureDetector(
-                    child: Text(
-                      hintText,
-                      style: TextStyles.suggestion,
-                    ),
-                    onTap: () {
-                      showCupertinoModalPopup(
-                          context: context, builder: (BuildContext context) {
-                            return _selectIOS(context, items);
-                      });
-                    },
+                  child: DropdownButton<String>(
+                    items: buildMaterialItems(items),
+                    value: null,
+                    hint: Text(hintText, style: TextStyles.suggestion),
+                    style: TextStyles.body,
+                    underline: Container(),
+                    iconEnabledColor: AppColors.black,
+                    onChanged: (value) {},
                   ),
                 ),
               ),
@@ -91,22 +87,22 @@ class AppDropdownButton extends StatelessWidget {
   List<DropdownMenuItem<String>> buildMaterialItems(List<String> items) {
     return items
         .map((item) => DropdownMenuItem<String>(
-              child: Text(
-                item,
-                textAlign: TextAlign.center,
-              ),
-              value: item,
-            ))
+      child: Text(
+        item,
+        textAlign: TextAlign.center,
+      ),
+      value: item,
+    ))
         .toList();
   }
 
   List<Widget> buildCupertinoItems(List<String> items) {
     return items
         .map((item) => Text(
-              item,
-              textAlign: TextAlign.center,
-              style: TextStyles.body,
-            ))
+      item,
+      textAlign: TextAlign.center,
+      style: TextStyles.picker,
+    ))
         .toList();
   }
 
@@ -122,7 +118,7 @@ class AppDropdownButton extends StatelessWidget {
           itemExtent: 45.0,
           children: buildCupertinoItems(items),
           diameterRatio: 1.0,
-          onSelectedItemChanged: (int Value) {},
+          onSelectedItemChanged: (int value) {},
         ),
       ),
     );
