@@ -101,7 +101,7 @@ class _LoginState extends State<Login> {
               "Farmerly",
               style: GoogleFonts.pinyonScript(
                 fontWeight: FontWeight.bold,
-                fontSize: 100,
+                fontSize: 99,
                 color: Colors.black
               ),
             ),
