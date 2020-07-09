@@ -26,13 +26,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  StreamSubscription _userSubscription;
+  StreamSubscription _errorMessageSubscription;
+
   @override
   void initState() {
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
-    widget._userSubscription = authBloc.user.listen((user) {
+    _userSubscription = authBloc.user.listen((user) {
       if (user != null) Navigator.pushReplacementNamed(context, '/landing');
     });
-    widget._errorMessageSubscription =
+    _errorMessageSubscription =
         authBloc.errorMessage.listen((errorMessage) {
       if (errorMessage != '') {
         AppAlerts.showErrorDialog(Platform.isIOS, context, errorMessage)
@@ -44,8 +47,8 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    widget._userSubscription.cancel();
-    widget._errorMessageSubscription.cancel();
+    _userSubscription.cancel();
+    _errorMessageSubscription.cancel();
     super.dispose();
   }
 
@@ -98,7 +101,8 @@ class _LoginState extends State<Login> {
               "Farmerly",
               style: GoogleFonts.pinyonScript(
                 fontWeight: FontWeight.bold,
-                fontSize: 70,
+                fontSize: 100,
+                color: Colors.black
               ),
             ),
           ),
@@ -186,22 +190,22 @@ class _LoginState extends State<Login> {
   }
 }
 //clippath used not comfortable with the UI
-//class MyClipper extends CustomClipper<Path>{
-//  @override
-//  Path getClip(Size size) {
-//    var path=new Path();
-//    path.lineTo(0,size.height-80);
-//    var controlPoint=Offset(50,size.height);
-//    var endPoint=Offset(size.width/2, size.height);
-//    path.quadraticBezierTo(controlPoint.dx,controlPoint.dy, endPoint.dx, endPoint.dy);
-//    path.lineTo(size.width, size.height);
-//    path.lineTo(size.width, 0);
-//    return path;
-//  }
-//
-//  @override
-//  bool shouldReclip(CustomClipper<Path> oldClipper) {
-//   return true;
-//  }
-//
-//}
+class MyClipper extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size) {
+    var path=new Path();
+    path.lineTo(0,size.height-80);
+    var controlPoint=Offset(50,size.height);
+    var endPoint=Offset(size.width/2, size.height);
+    path.quadraticBezierTo(controlPoint.dx,controlPoint.dy, endPoint.dx, endPoint.dy);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+   return true;
+  }
+
+}

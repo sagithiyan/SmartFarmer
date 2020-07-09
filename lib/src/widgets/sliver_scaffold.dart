@@ -11,6 +11,7 @@ abstract class AppSliverScaffold {
           return <Widget>[
             AppNavbar.cupertinoNavBar(
               title: navTitle,
+              context: context
             ),
           ];
         },
