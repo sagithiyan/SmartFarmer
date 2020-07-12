@@ -25,15 +25,19 @@ class _EditProductState extends State<EditProduct> {
 
     if (Platform.isIOS) {
       return AppSliverScaffold.cupertinoSliverScaffold(
-          navTitle: '', pageBody: pageBody(true,productBloc,context), context: context);
+          navTitle: '',
+          pageBody: pageBody(true, productBloc, context),
+          context: context);
     } else {
       return AppSliverScaffold.materialSliverScaffold(
-          navTitle: '', pageBody: pageBody(false,productBloc,context), context: context);
+          navTitle: '',
+          pageBody: pageBody(false, productBloc, context),
+          context: context);
     }
   }
 
-  Widget pageBody(bool isIOS, ProductBloc productBloc,BuildContext context) {
-    var items=Provider.of<List<String>>(context);
+  Widget pageBody(bool isIOS, ProductBloc productBloc, BuildContext context) {
+    var items = Provider.of<List<String>>(context);
     return ListView(
       children: <Widget>[
         Text(
@@ -57,21 +61,19 @@ class _EditProductState extends State<EditProduct> {
                 errorText: snapshot.error,
                 onChanged: productBloc.changeProductName,
               );
-            }
-        ),
+            }),
         StreamBuilder<String>(
-          stream: productBloc.unitType,
-          builder: (context, snapshot) {
-            return AppDropdownButton(
-              hintText: 'Unit Type',
-              items: items,
-              value:snapshot.data ,
-              materialIcon: FontAwesomeIcons.balanceScale,
-              cupertinoIcon: FontAwesomeIcons.balanceScale,
-              onChanged: productBloc.changeUnitType,
-            );
-          }
-        ),
+            stream: productBloc.unitType,
+            builder: (context, snapshot) {
+              return AppDropdownButton(
+                hintText: 'Unit Type',
+                items: items,
+                value: snapshot.data,
+                materialIcon: FontAwesomeIcons.balanceScale,
+                cupertinoIcon: FontAwesomeIcons.balanceScale,
+                onChanged: productBloc.changeUnitType,
+              );
+            }),
         StreamBuilder<double>(
             stream: productBloc.unitPrice,
             builder: (context, snapshot) {
@@ -84,8 +86,7 @@ class _EditProductState extends State<EditProduct> {
                 errorText: snapshot.error,
                 onChanged: productBloc.changeUnitPrice,
               );
-            }
-        ),
+            }),
         StreamBuilder<int>(
             stream: productBloc.availableUnits,
             builder: (context, snapshot) {
@@ -98,18 +99,18 @@ class _EditProductState extends State<EditProduct> {
                 errorText: snapshot.error,
                 onChanged: productBloc.changeAvailableUnits,
               );
-            }
-        ),
+            }),
         AppButton(buttonType: ButtonType.black, buttonText: 'Add Image'),
         StreamBuilder<bool>(
-          stream: productBloc.isValid,
-          builder: (context, snapshot) {
-            return AppButton(
-              buttonType:(snapshot.data==true) ? ButtonType.DarkBlue : ButtonType.Disabled,
-              buttonText: 'Save Product',
-            );
-          }
-        ),
+            stream: productBloc.isValid,
+            builder: (context, snapshot) {
+              return AppButton(
+                buttonType: (snapshot.data == true)
+                    ? ButtonType.DarkBlue
+                    : ButtonType.Disabled,
+                buttonText: 'Save Product',
+              );
+            }),
       ],
     );
   }

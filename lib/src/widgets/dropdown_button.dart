@@ -16,12 +16,11 @@ class AppDropdownButton extends StatelessWidget {
 
   AppDropdownButton(
       {@required this.items,
-        @required this.hintText,
-        this.materialIcon,
-        this.cupertinoIcon,
-        this.value,
-        this.onChanged
-      });
+      @required this.hintText,
+      this.materialIcon,
+      this.cupertinoIcon,
+      this.value,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +41,17 @@ class AppDropdownButton extends StatelessWidget {
               Expanded(
                 child: Center(
                     child: GestureDetector(
-                      child: (value==null)?Text(hintText, style: TextStyles.suggestion):Text(value, style: TextStyles.body),
-                      onTap: () {
-                        showCupertinoModalPopup(
-                            context: context, builder: (BuildContext context) {
+                  child: (value == null)
+                      ? Text(hintText, style: TextStyles.suggestion)
+                      : Text(value, style: TextStyles.body),
+                  onTap: () {
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext context) {
                           return _selectIOS(context, items);
                         });
-                      },
-                    )),
+                  },
+                )),
               ),
             ],
           ),
@@ -78,7 +80,7 @@ class AppDropdownButton extends StatelessWidget {
                     style: TextStyles.body,
                     underline: Container(),
                     iconEnabledColor: AppColors.black,
-                    onChanged: (value) =>onChanged(value),
+                    onChanged: (value) => onChanged(value),
                   ),
                 ),
               ),
@@ -92,22 +94,22 @@ class AppDropdownButton extends StatelessWidget {
   List<DropdownMenuItem<String>> buildMaterialItems(List<String> items) {
     return items
         .map((item) => DropdownMenuItem<String>(
-      child: Text(
-        item,
-        textAlign: TextAlign.center,
-      ),
-      value: item,
-    ))
+              child: Text(
+                item,
+                textAlign: TextAlign.center,
+              ),
+              value: item,
+            ))
         .toList();
   }
 
   List<Widget> buildCupertinoItems(List<String> items) {
     return items
         .map((item) => Text(
-      item,
-      textAlign: TextAlign.center,
-      style: TextStyles.picker,
-    ))
+              item,
+              textAlign: TextAlign.center,
+              style: TextStyles.picker,
+            ))
         .toList();
   }
 
@@ -123,7 +125,7 @@ class AppDropdownButton extends StatelessWidget {
           itemExtent: 45.0,
           children: buildCupertinoItems(items),
           diameterRatio: 1.0,
-          onSelectedItemChanged: (int index) =>onChanged(items[index]),
+          onSelectedItemChanged: (int index) => onChanged(items[index]),
         ),
       ),
     );
