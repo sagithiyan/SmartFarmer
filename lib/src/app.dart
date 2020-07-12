@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/routes.dart';
 import 'package:smartfarmer/src/screens/landing.dart';
+import 'package:smartfarmer/src/services/firestore_service.dart';
 import 'package:smartfarmer/src/styles/colors.dart';
 import 'package:smartfarmer/src/styles/text.dart';
 import 'blocs/product_bloc.dart';
@@ -12,6 +13,7 @@ import 'dart:io';
 
 final authBloc = AuthBloc();
 final productBloc = ProductBloc();
+final firestoreService=FirestoreService();
 
 class App extends StatefulWidget {
   @override
@@ -24,7 +26,8 @@ class _AppState extends State<App> {
     return MultiProvider(providers: [
       Provider(create: (context) => authBloc),
       Provider(create: (context) => productBloc),
-      FutureProvider(create: (context) => authBloc.isLoggedIn())
+      FutureProvider(create: (context) => authBloc.isLoggedIn()),
+      StreamProvider(create: (context) =>firestoreService.fetchUnitTypes())
     ], child: PlatformApp());
   }
 
