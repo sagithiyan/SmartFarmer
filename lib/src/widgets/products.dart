@@ -9,6 +9,7 @@ import 'package:smartfarmer/src/models/product.dart';
 import 'dart:io';
 
 import 'package:smartfarmer/src/styles/colors.dart';
+import 'package:smartfarmer/src/widgets/card.dart';
 
 class Products extends StatelessWidget {
   @override
@@ -51,7 +52,13 @@ class Products extends StatelessWidget {
             itemCount:snapshot.data.length ,
             itemBuilder: (context,index){
                 var product =snapshot.data[index];
-                return Text(product.productName);
+                return AppCard(
+                  availableUnits: product.availableUnits,
+                  price: product.unitPrice,
+                  productName: product.productName,
+                  unitType: product.unitType,
+
+                );
             });
       }
     );
