@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smartfarmer/src/models/product.dart';
 import 'package:smartfarmer/src/models/user.dart';
 
 
@@ -17,5 +18,8 @@ class FirestoreService {
     return _db.collection('types').document('units').snapshots()
         .map((snapshot) => snapshot.data['production']
         .map<String>((type) => type.toString()).toList());
+  }
+  Future<void> addProduct(Product product){
+    return _db.collection('products').document(product.productId).setData(product.toMap());
   }
 }
