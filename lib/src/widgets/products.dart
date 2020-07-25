@@ -14,8 +14,8 @@ import 'package:smartfarmer/src/widgets/card.dart';
 class Products extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var productBloc=Provider.of<ProductBloc>(context);
-    var authBloc=Provider.of<AuthBloc>(context);
+    var productBloc = Provider.of<ProductBloc>(context);
+    var authBloc = Provider.of<AuthBloc>(context);
 
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
@@ -26,12 +26,12 @@ class Products extends StatelessWidget {
               onPressed: () => Navigator.of(context).pushNamed('/editproduct'),
             )
           ],
-          body: pageBody(productBloc,context,authBloc.userId),
+          body: pageBody(productBloc, context, authBloc.userId),
         ),
       );
     } else {
       return Scaffold(
-        body: pageBody(productBloc,context,authBloc.userId  ),
+        body: pageBody(productBloc, context, authBloc.userId),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.black,
           child: Icon(Icons.add),
@@ -41,26 +41,30 @@ class Products extends StatelessWidget {
     }
   }
 
-  Widget pageBody(ProductBloc productBloc,BuildContext context,String vendorId) {
+  Widget pageBody(
+      ProductBloc productBloc, BuildContext context, String vendorId) {
     return StreamBuilder<List<Product>>(
-      stream: productBloc.productByVendorId(vendorId),
-      builder: (context, snapshot) {
-        if(!snapshot.hasData) return (Platform.isIOS)
-            ?CupertinoActivityIndicator()
-        :CircularProgressIndicator();
-        return ListView.builder(
-            itemCount:snapshot.data.length ,
-            itemBuilder: (context,index){
-                var product =snapshot.data[index];
-                return AppCard(
-                  availableUnits: product.availableUnits,
-                  price: product.unitPrice,
-                  productName: product.productName,
-                  unitType: product.unitType,
-
+        stream: productBloc.productByVendorId(vendorId),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return (Platform.isIOS)
+                ? CupertinoActivityIndicator()
+                : CircularProgressIndicator();
+          return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                var product = snapshot.data[index];
+                return GestureDetector(
+                  child: AppCard(
+                    availableUnits: product.availableUnits,
+                    price: product.unitPrice,
+                    productName: product.productName,
+                    unitType: product.unitType,
+                  ),
+                  onTap: () => Navigator.of(context)
+                      .pushNamed('/editproduct/${product.productId}'),
                 );
-            });
-      }
-    );
+              });
+        });
   }
 }

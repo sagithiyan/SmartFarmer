@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class Product{
+class Product {
   final String productName;
   final String unitType;
   final double unitPrice;
@@ -11,29 +11,28 @@ class Product{
   final bool approved;
   final String note;
 
-  Product({
-    @required this.approved,
-    @required this.availableUnits,
-    this.imageUrl = "",
-    this.note = "",
-    @required this.productId,
-    @required this.productName,
-    @required this.unitPrice,
-    @required this.unitType,
-    @required this.vendorId
-  });
+  Product(
+      {@required this.approved,
+      @required this.availableUnits,
+      this.imageUrl = "",
+      this.note = "",
+      @required this.productId,
+      @required this.productName,
+      @required this.unitPrice,
+      @required this.unitType,
+      @required this.vendorId});
 
   Map<String, dynamic> toMap() {
     return {
-      'productName' : productName,
-      'unitType' : unitType,
-      'unitPrice' : unitPrice,
+      'productName': productName,
+      'unitType': unitType,
+      'unitPrice': unitPrice,
       'availableUnits': availableUnits,
       'approved': approved,
-      'imageUrl':imageUrl,
-      'note':note,
-      'productId':productId,
-      'vendorId':vendorId
+      'imageUrl': imageUrl,
+      'note': note,
+      'productId': productId,
+      'vendorId': vendorId
     };
   }
 

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smartfarmer/src/screens/edit_product.dart';
@@ -20,6 +22,14 @@ abstract class Routes {
       case "/editproduct":
         return MaterialPageRoute(builder: (context) => EditProduct());
       default:
+        var routeArray = settings.name.split('/');
+        if (settings.name.contains('/editproduct/')) {
+          return MaterialPageRoute(
+              builder: (context) => EditProduct(
+                    productId: routeArray[2],
+                  ));
+        }
+
         return MaterialPageRoute(builder: (context) => Login());
     }
   }
@@ -37,6 +47,13 @@ abstract class Routes {
       case "/editproduct":
         return CupertinoPageRoute(builder: (context) => EditProduct());
       default:
+        var routeArray = settings.name.split('/');
+        if (settings.name.contains('/editproduct/')) {
+          return CupertinoPageRoute(
+              builder: (context) => EditProduct(
+                    productId: routeArray[2],
+                  ));
+        }
         return CupertinoPageRoute(builder: (context) => Login());
     }
   }

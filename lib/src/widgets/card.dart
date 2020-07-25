@@ -4,7 +4,6 @@ import 'package:smartfarmer/src/styles/base.dart';
 import 'package:smartfarmer/src/styles/colors.dart';
 import 'package:smartfarmer/src/styles/text.dart';
 
-
 class AppCard extends StatelessWidget {
   final String productName;
   final String unitType;
@@ -34,25 +33,30 @@ class AppCard extends StatelessWidget {
             color: AppColors.darkblue,
             width: BaseStyles.borderWidth,
           ),
-          borderRadius: BorderRadius.circular(BaseStyles.borderRadius)
-      ),
+          borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       child: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(right: 10.0, bottom: 10.0, top: 10.0),
-                child: Image.asset('assets/images/example_vege.jpg', height: 100.0,),
+                padding:
+                    const EdgeInsets.only(right: 10.0, bottom: 10.0, top: 10.0),
+                child: Image.asset(
+                  'assets/images/hh.png',
+                  height: 100.0,
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(productName,style: TextStyles.subtitle),
-                  Text('${formatCurrency.format(price)}/$unitType', style: TextStyles.body),
-                  (availableUnits > 0 )
+                  Text(productName, style: TextStyles.subtitle),
+                  Text('${formatCurrency.format(price)}/$unitType',
+                      style: TextStyles.body),
+                  (availableUnits > 0)
                       ? Text('In Stock', style: TextStyles.bodyLightBlue)
-                      : Text('Currently Unavailable',style: TextStyles.bodyRed)
-                ],)
+                      : Text('Currently Unavailable', style: TextStyles.bodyRed)
+                ],
+              )
             ],
           ),
           Text(note, style: TextStyles.body)

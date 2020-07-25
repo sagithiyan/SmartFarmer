@@ -55,6 +55,7 @@ abstract class TextStyles {
     return GoogleFonts.roboto(
         textStyle: TextStyle(color: AppColors.darkgray, fontSize: 30.0));
   }
+
   static TextStyle get link {
     return GoogleFonts.roboto(
         textStyle: TextStyle(
