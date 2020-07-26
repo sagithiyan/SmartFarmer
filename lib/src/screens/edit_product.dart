@@ -32,7 +32,7 @@ class _EditProductState extends State<EditProduct> {
   void initState() {
     var productBloc = Provider.of<ProductBloc>(context, listen: false);
     productBloc.productSaved.listen((saved) {
-      if (saved != null && saved == true && context !=null){
+      if (saved != null && saved == true && context != null) {
         Fluttertoast.showToast(
             msg: "Product Saved",
             toastLength: Toast.LENGTH_SHORT,
@@ -40,8 +40,7 @@ class _EditProductState extends State<EditProduct> {
             timeInSecForIosWeb: 2,
             backgroundColor: AppColors.lightblue,
             textColor: Colors.white,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
         Navigator.of(context).pop();
       }
     });
@@ -92,7 +91,7 @@ class _EditProductState extends State<EditProduct> {
   Widget pageBody(bool isIOS, ProductBloc productBloc, BuildContext context,
       Product existingProduct) {
     var items = Provider.of<List<String>>(context);
-      var pageLabel=(existingProduct != null) ? 'Edit Product' :'Add Product';
+    var pageLabel = (existingProduct != null) ? 'Edit Product' : 'Add Product';
     return ListView(
       children: <Widget>[
         Text(
@@ -164,7 +163,30 @@ class _EditProductState extends State<EditProduct> {
                 onChanged: productBloc.changeAvailableUnits,
               );
             }),
-        AppButton(buttonType: ButtonType.black, buttonText: 'Add Image'),
+        StreamBuilder<String>(
+            stream: productBloc.imageUrl,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data == "")
+                return AppButton(
+                  buttonType: ButtonType.black,
+                  buttonText: 'Add Image',
+                  onPressed: productBloc.pickImage,
+                );
+
+              return Column(
+                children: <Widget>[
+                  Padding(
+                    padding: BaseStyles.listPadding,
+                    child: Image.network(snapshot.data),
+                  ),
+                  AppButton(
+                    buttonType: ButtonType.black,
+                    buttonText: 'Change Image',
+                    onPressed: productBloc.pickImage,
+                  )
+                ],
+              );
+            }),
         StreamBuilder<bool>(
             stream: productBloc.isValid,
             builder: (context, snapshot) {
@@ -190,12 +212,14 @@ class _EditProductState extends State<EditProduct> {
       productBloc.changeProductName(product.productName);
       productBloc.changeUnitPrice(product.unitPrice.toString());
       productBloc.changeAvailableUnits(product.availableUnits.toString());
+      productBloc.changeImageUrl(product.imageUrl ??'');
     } else {
       //Add
       productBloc.changeUnitType(null);
       productBloc.changeProductName(null);
       productBloc.changeUnitPrice(null);
       productBloc.changeAvailableUnits(null);
+      productBloc.changeImageUrl('');
     }
   }
 }
