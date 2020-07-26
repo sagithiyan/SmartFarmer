@@ -44,6 +44,7 @@ class ProductBloc {
   Future<Product> fetchProduct(String productId) => db.fetchProduct(productId);
   Stream<bool> get isUploading => _isUploading.stream;
 
+
   //Set
   Function(String) get changeProductName => _productName.sink.add;
   Function(String) get changeUnitType => _unitType.sink.add;
@@ -65,17 +66,18 @@ class ProductBloc {
     _isUploading.close();
   }
 
+  //Functions
   Future<void> saveProduct() async {
     var product = Product(
-      approved: (_product.value == null) ? true : _product.value.approved,
-      availableUnits: int.parse(_availableUnits.value),
-      productId:
-          (_product.value == null) ? uuid.v4() : _product.value.productId,
-      productName: _productName.value.trim(),
-      unitPrice: double.parse(_unitPrice.value),
-      unitType: _unitType.value,
-      vendorId: _vendorId.value,
-      imageUrl: _imageUrl.value,
+        approved: (_product.value == null) ? true : _product.value.approved,
+        availableUnits: int.parse(_availableUnits.value),
+        productId:
+        (_product.value == null) ? uuid.v4() : _product.value.productId,
+        productName: _productName.value.trim(),
+        unitPrice: double.parse(_unitPrice.value),
+        unitType: _unitType.value,
+        vendorId: _vendorId.value,
+        imageUrl: _imageUrl.value
     );
 
     return db
@@ -98,30 +100,26 @@ class ProductBloc {
       //Upload to Firebase
       if (image != null) {
         _isUploading.sink.add(true);
-        //image properties
-        ImageProperties properties =
-            await FlutterNativeImage.getImageProperties(image.path);
-        //croping the image
-        if (properties.height > properties.width) {
-          var yoffset = (properties.height - properties.width) / 2;
-          croppedFile = await FlutterNativeImage.cropImage(image.path, 0,
-              yoffset.toInt(), properties.width, properties.width);
+
+        //Get Image Properties
+        ImageProperties properties = await FlutterNativeImage.getImageProperties(image.path);
+
+        //CropImage
+        if (properties.height > properties.width){
+          var yoffset = (properties.height - properties.width)/2;
+          croppedFile = await FlutterNativeImage.cropImage(image.path, 0, yoffset.toInt(), properties.width, properties.width);
         } else if (properties.width > properties.height) {
-          var xoffset = (properties.width - properties.height) / 2;
-          croppedFile = await FlutterNativeImage.cropImage(image.path,
-              xoffset.toInt(), 0, properties.height, properties.height);
+          var xoffset = (properties.width- properties.height)/2;
+          croppedFile = await FlutterNativeImage.cropImage(image.path, xoffset.toInt(), 0, properties.height, properties.height);
         } else {
           croppedFile = File(image.path);
         }
-        //resizeing
-        File compressedFile = await FlutterNativeImage.compressImage(
-            croppedFile.path,
-            quality: 100,
-            targetHeight: 600,
-            targetWidth: 600);
 
-        var imageUrl =
-            await storageService.uploadProductImage(compressedFile, uuid.v4());
+        //Resize
+        File compressedFile = await FlutterNativeImage.compressImage(croppedFile.path,quality: 100, targetHeight: 600, targetWidth: 600);
+
+        var imageUrl = await storageService.uploadProductImage(
+            compressedFile, uuid.v4());
         changeImageUrl(imageUrl);
         _isUploading.sink.add(false);
       } else {
@@ -135,38 +133,38 @@ class ProductBloc {
   //Validators
   final validateUnitPrice = StreamTransformer<String, double>.fromHandlers(
       handleData: (unitPrice, sink) {
-    if (unitPrice != null) {
-      try {
-        sink.add(double.parse(unitPrice));
-      } catch (error) {
-        sink.addError('Must be a number');
-      }
-    }
-  });
+        if (unitPrice != null) {
+          try {
+            sink.add(double.parse(unitPrice));
+          } catch (error) {
+            sink.addError('Must be a number');
+          }
+        }
+      });
 
   final validateAvailableUnits = StreamTransformer<String, int>.fromHandlers(
       handleData: (availableUnits, sink) {
-    if (availableUnits != null) {
-      try {
-        sink.add(int.parse(availableUnits));
-      } catch (error) {
-        sink.addError('Must be a whole number');
-      }
-    }
-  });
+        if (availableUnits != null) {
+          try {
+            sink.add(int.parse(availableUnits));
+          } catch (error) {
+            sink.addError('Must be a whole number');
+          }
+        }
+      });
 
   final validateProductName = StreamTransformer<String, String>.fromHandlers(
       handleData: (productName, sink) {
-    if (productName != null) {
-      if (productName.length >= 3 && productName.length <= 20) {
-        sink.add(productName.trim());
-      } else {
-        if (productName.length < 3) {
-          sink.addError('3 Character Minimum');
-        } else {
-          sink.addError('20 Character Maximum');
+        if (productName != null) {
+          if (productName.length >= 3 && productName.length <= 20) {
+            sink.add(productName.trim());
+          } else {
+            if (productName.length < 3) {
+              sink.addError('3 Character Minimum');
+            } else {
+              sink.addError('20 Character Maximum');
+            }
+          }
         }
-      }
-    }
-  });
+      });
 }

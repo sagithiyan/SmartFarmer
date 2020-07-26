@@ -165,14 +165,12 @@ class _EditProductState extends State<EditProduct> {
             }),
         StreamBuilder<bool>(
           stream: productBloc.isUploading,
-          builder: (context, snapshot) {
-            return (!snapshot.hasData || snapshot.hasData == false)
+          builder: (context,snapshot){
+            return (!snapshot.hasData || snapshot.data == false)
                 ? Container()
-                : Center(
-                    child: (Platform.isIOS)
-                        ? CupertinoActivityIndicator()
-                        : CircularProgressIndicator(),
-                  );
+                : Center(child: (Platform.isIOS)
+                ? CupertinoActivityIndicator()
+                : CircularProgressIndicator(),);
           },
         ),
         StreamBuilder<String>(
