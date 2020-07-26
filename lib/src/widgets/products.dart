@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +42,7 @@ class Products extends StatelessWidget {
                           price: product.unitPrice,
                           productName: product.productName,
                           unitType: product.unitType,
+                          imageUrl: product.imageUrl,
                         ),
                         onTap: () => Navigator.of(context)
                             .pushNamed('/editproduct/${product.productId}'),
@@ -56,7 +56,7 @@ class Products extends StatelessWidget {
                   color: AppColors.black,
                   child: (Platform.isIOS)
                       ? Icon(CupertinoIcons.add,
-                      color: Colors.white, size: 35.0)
+                          color: Colors.white, size: 35.0)
                       : Icon(Icons.add, color: Colors.white, size: 35.0),
                 ),
                 onTap: () => Navigator.of(context).pushNamed('/editproduct'),

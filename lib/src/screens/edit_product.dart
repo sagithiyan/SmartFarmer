@@ -163,6 +163,18 @@ class _EditProductState extends State<EditProduct> {
                 onChanged: productBloc.changeAvailableUnits,
               );
             }),
+        StreamBuilder<bool>(
+          stream: productBloc.isUploading,
+          builder: (context, snapshot) {
+            return (!snapshot.hasData || snapshot.hasData == false)
+                ? Container()
+                : Center(
+                    child: (Platform.isIOS)
+                        ? CupertinoActivityIndicator()
+                        : CircularProgressIndicator(),
+                  );
+          },
+        ),
         StreamBuilder<String>(
             stream: productBloc.imageUrl,
             builder: (context, snapshot) {
@@ -212,7 +224,7 @@ class _EditProductState extends State<EditProduct> {
       productBloc.changeProductName(product.productName);
       productBloc.changeUnitPrice(product.unitPrice.toString());
       productBloc.changeAvailableUnits(product.availableUnits.toString());
-      productBloc.changeImageUrl(product.imageUrl ??'');
+      productBloc.changeImageUrl(product.imageUrl ?? '');
     } else {
       //Add
       productBloc.changeUnitType(null);
