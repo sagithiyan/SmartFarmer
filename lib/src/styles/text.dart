@@ -18,7 +18,8 @@ abstract class TextStyles {
   }
 
   static TextStyle get subtitle {
-    return GoogleFonts.economica(
+    //economica used
+    return GoogleFonts.lato(
         textStyle: TextStyle(
             color: AppColors.black,
             fontWeight: FontWeight.bold,
