@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smartfarmer/src/models/market.dart';
 import 'package:smartfarmer/src/models/product.dart';
 import 'package:smartfarmer/src/models/user.dart';
 
@@ -47,6 +48,17 @@ class FirestoreService {
         .map((query) => query.documents)
         .map((snapshot) => snapshot
             .map((document) => Product.fromFirestore(document.data))
+            .toList());
+  }
+
+  Stream<List<Market>> fetchUpcomingMarkets() {
+    return _db
+        .collection('markets')
+        .where('dateEnd', isGreaterThan: DateTime.now().toIso8601String())
+        .snapshots()
+        .map((query) => query.documents)
+        .map((snapshot) => snapshot
+            .map((document) => Market.fromFirestore(document.data))
             .toList());
   }
 }
