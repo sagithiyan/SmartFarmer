@@ -81,10 +81,12 @@ class Landing extends StatelessWidget {
                     var market=snapshot.data[index];
                     var dateEnd=DateTime.parse(market.dateEnd);
                     return AppListTile(
+
                       month:formatDate(dateEnd,['M']) ,
                       date:formatDate(dateEnd,['d']) ,
                       title: market.title,
-                      location: '${market.location.name},${market.location.address},${market.location.city},${market.location.state}'
+                      location: '${market.location.name},${market.location.address},${market.location.city},${market.location.state}',
+                      acceptingorders: market.acceptingOrders,
                     );
                   },
                 );

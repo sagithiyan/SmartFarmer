@@ -12,12 +12,14 @@ class AppListTile extends StatelessWidget {
   final String title;
   final String location;
   final bool acceptingorders;
+  final String marketId;
 
   AppListTile(
       {@required this.month,
       @required this.date,
       @required this.title,
       @required this.location,
+      @required this.marketId,
       this.acceptingorders = false});
 
   @override
@@ -53,6 +55,7 @@ class AppListTile extends StatelessWidget {
                   color: AppColors.darkblue,
                 )
               : Text(''),
+
         ),
         Padding(
           padding:
