@@ -77,15 +77,16 @@ class Landing extends StatelessWidget {
                   );
                 return ListView.builder(
                   itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context,int index){
-                    var market=snapshot.data[index];
-                    var dateEnd=DateTime.parse(market.dateEnd);
+                  itemBuilder: (BuildContext context, int index) {
+                    var market = snapshot.data[index];
+                    var dateEnd = DateTime.parse(market.dateEnd);
                     return AppListTile(
-
-                      month:formatDate(dateEnd,['M']) ,
-                      date:formatDate(dateEnd,['d']) ,
+                      marketId: market.marketId,
+                      month: formatDate(dateEnd, ['M']),
+                      date: formatDate(dateEnd, ['d']),
                       title: market.title,
-                      location: '${market.location.name},${market.location.address},${market.location.city},${market.location.state}',
+                      location:
+                          '${market.location.name},${market.location.address},${market.location.city},${market.location.state}',
                       acceptingorders: market.acceptingOrders,
                     );
                   },

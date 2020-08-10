@@ -55,7 +55,9 @@ class AppListTile extends StatelessWidget {
                   color: AppColors.darkblue,
                 )
               : Text(''),
-
+          onTap: (acceptingorders)
+              ? () => Navigator.of(context).pushNamed('/customer/$marketId')
+              : null,
         ),
         Padding(
           padding:
