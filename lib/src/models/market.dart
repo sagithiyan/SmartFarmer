@@ -9,6 +9,7 @@ class Market {
   final bool acceptingOrders;
   final String marketId;
 
+  
   Market(
       {@required this.title,
       @required this.dateBegin,

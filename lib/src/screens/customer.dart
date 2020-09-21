@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/styles/tabbar.dart';
@@ -9,8 +10,11 @@ import 'package:smartfarmer/src/widgets/customer_scaffold.dart';
 import 'dart:io';
 import 'package:smartfarmer/src/widgets/navbar.dart';
 import 'package:smartfarmer/src/widgets/orders.dart';
+import 'package:smartfarmer/src/widgets/products_customer.dart';
 import 'package:smartfarmer/src/widgets/products.dart';
 import 'package:smartfarmer/src/widgets/profile.dart';
+import 'package:smartfarmer/src/widgets/profile_cusomer.dart';
+import 'package:smartfarmer/src/widgets/shopping_bag.dart';
 
 class Customer extends StatefulWidget {
   final String marketId;
@@ -27,7 +31,7 @@ class Customer extends StatefulWidget {
       indicatorColor: TabBarStyles.indicatorColor,
       tabs: <Widget>[
         Tab(icon: Icon(Icons.list)),
-        Tab(icon: Icon(Icons.shopping_cart)),
+        Tab(icon: Icon(FontAwesomeIcons.shoppingBag)),
         Tab(icon: Icon(Icons.person)),
       ],
     );
@@ -85,9 +89,9 @@ class _CustomerState extends State<Customer> {
                 },
                 body: TabBarView(
                   children: <Widget>[
-                    Products(),
-                    Orders(),
-                    Profile(),
+                    ProductsCustomer(),
+                    ShoppingBag(),
+                    ProfileCustomer(),
                   ],
                 ))),
       );
