@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
 import 'package:smartfarmer/src/blocs/product_bloc.dart';
 import 'package:smartfarmer/src/models/product.dart';
-import 'package:smartfarmer/src/models/user.dart';
+import 'package:smartfarmer/src/models/application_user.dart';
 import 'package:smartfarmer/src/styles/base.dart';
 import 'package:smartfarmer/src/styles/colors.dart';
 import 'package:smartfarmer/src/styles/text.dart';
