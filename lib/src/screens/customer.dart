@@ -17,18 +17,20 @@ import 'package:smartfarmer/src/widgets/profile_cusomer.dart';
 import 'package:smartfarmer/src/widgets/shopping_bag.dart';
 
 class Customer extends StatefulWidget {
+
   final String marketId;
 
   Customer({@required this.marketId});
+
 
   @override
   _CustomerState createState() => _CustomerState();
 
   static TabBar get customerTabBar {
     return TabBar(
-      unselectedLabelColor: TabBarStyles.unselectedLabelColor,
-      labelColor: TabBarStyles.labelColor,
-      indicatorColor: TabBarStyles.indicatorColor,
+      unselectedLabelColor: TabBarStyles.unselectedLabelColor ,
+      labelColor: TabBarStyles.labelColor ,
+      indicatorColor: TabBarStyles.indicatorColor ,
       tabs: <Widget>[
         Tab(icon: Icon(Icons.list)),
         Tab(icon: Icon(FontAwesomeIcons.shoppingBag)),
@@ -40,14 +42,13 @@ class Customer extends StatefulWidget {
 
 class _CustomerState extends State<Customer> {
   StreamSubscription _userSubscription;
+
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      var authBloc = Provider.of<AuthBloc>(context, listen: false);
+    Future.delayed(Duration.zero, (){
+      var authBloc = Provider.of<AuthBloc>(context,listen: false);
       _userSubscription = authBloc.user.listen((user) {
-        if (user == null)
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil('/login', (route) => false);
+        if (user == null) Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
       });
     });
 
@@ -62,13 +63,13 @@ class _CustomerState extends State<Customer> {
 
   @override
   Widget build(BuildContext context) {
+
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
         child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              AppNavbar.cupertinoNavBar(
-                  title: 'Customer Sachin', context: context),
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
+            return <Widget> [
+              AppNavbar.cupertinoNavBar(title: 'Customer Name',context: context),
             ];
           },
           body: CustomerScaffold.cupertinoTabScaffold,
@@ -79,21 +80,18 @@ class _CustomerState extends State<Customer> {
         length: 3,
         child: Scaffold(
             body: NestedScrollView(
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    AppNavbar.materialNavBar(
-                        title: 'Customer  Sachin',
-                        tabBar: Customer.customerTabBar)
+                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
+                  return <Widget> [
+                    AppNavbar.materialNavBar(title: 'Customer Name', tabBar: Customer.customerTabBar)
                   ];
                 },
-                body: TabBarView(
-                  children: <Widget>[
-                    ProductsCustomer(),
-                    ShoppingBag(),
-                    ProfileCustomer(),
-                  ],
-                ))),
+                body: TabBarView(children: <Widget>[
+                  ProductsCustomer(),
+                  ShoppingBag(),
+                  ProfileCustomer(),
+                ],)
+            )
+        ),
       );
     }
   }
