@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smartfarmer/src/app.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
+import 'package:smartfarmer/src/blocs/vendor_bloc.dart';
 import 'package:smartfarmer/src/styles/tabbar.dart';
 import 'dart:io';
 import 'package:smartfarmer/src/widgets/navbar.dart';
@@ -13,8 +15,6 @@ import 'package:smartfarmer/src/widgets/profile.dart';
 import 'package:smartfarmer/src/widgets/vendor_scaffold.dart';
 
 class Vendor extends StatefulWidget {
-
-
   @override
   _VendorState createState() => _VendorState();
 
@@ -34,10 +34,15 @@ class Vendor extends StatefulWidget {
 
 class _VendorState extends State<Vendor> {
   StreamSubscription _userSubscription;
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      var authBloc = Provider.of<AuthBloc>(context, listen: false);
+      final authBloc = Provider.of<AuthBloc>(context, listen: false);
+      final vendorBloc = Provider.of<VendorBloc>(context, listen: false);
+      vendorBloc
+          .fetchVendor(authBloc.userId)
+          .then((vendor) => vendorBloc.changeVendor(vendor));
       _userSubscription = authBloc.user.listen((user) {
         if (user == null)
           Navigator.of(context)
@@ -62,9 +67,7 @@ class _VendorState extends State<Vendor> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               AppNavbar.cupertinoNavBar(
-                title: 'Vendor Sachin',
-                context: context
-              ),
+                  title: 'Vendor Sachin', context: context),
             ];
           },
           body: VendorScaffold.cupertinoTabScaffold,
@@ -79,7 +82,7 @@ class _VendorState extends State<Vendor> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     AppNavbar.materialNavBar(
-                        title: 'Vendor  Sachin', tabBar: Vendor.vendorTabBar)
+                        title: 'Vendor Sachin', tabBar: Vendor.vendorTabBar)
                   ];
                 },
                 body: TabBarView(
