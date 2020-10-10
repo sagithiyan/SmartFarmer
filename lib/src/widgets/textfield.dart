@@ -13,6 +13,7 @@ class AppTextField extends StatefulWidget {
   final void Function(String) onChanged;
   final String errorText;
   final String initialText;
+  final int maxLines;
 
   AppTextField({
     @required this.isIOS,
@@ -23,8 +24,8 @@ class AppTextField extends StatefulWidget {
     this.obscureText,
     this.onChanged,
     this.errorText,
-    this.initialText
-
+    this.initialText,
+    this.maxLines = 1,
   });
 
   @override
@@ -40,7 +41,7 @@ class _AppTextFieldState extends State<AppTextField> {
   void initState() {
     _node = FocusNode();
     _controller = TextEditingController();
-    if(widget.initialText !=null) _controller.text=widget.initialText;
+    if (widget.initialText != null) _controller.text = widget.initialText;
     _node.addListener(_handleFocusChange);
     displayCupertinoErrorBorder = false;
     super.initState();
@@ -91,6 +92,7 @@ class _AppTextFieldState extends State<AppTextField> {
               onChanged: widget.onChanged,
               focusNode: _node,
               controller: _controller,
+              maxLines: widget.maxLines,
             ),
             (widget.errorText != null)
                 ? Padding(
@@ -126,6 +128,7 @@ class _AppTextFieldState extends State<AppTextField> {
               (widget.obscureText != null) ? widget.obscureText : false,
           controller: _controller,
           onChanged: widget.onChanged,
+          maxLines: widget.maxLines,
         ),
       );
     }

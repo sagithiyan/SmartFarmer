@@ -81,13 +81,13 @@ class _EditVendorState extends State<EditVendor> {
 
         return (Platform.isIOS)
             ? AppSliverScaffold.cupertinoSliverScaffold(
-            navTitle: '',
-            pageBody: pageBody(true, vendorBloc, context, vendor),
-            context: context)
+                navTitle: '',
+                pageBody: pageBody(true, vendorBloc, context, vendor),
+                context: context)
             : AppSliverScaffold.materialSliverScaffold(
-            navTitle: '',
-            pageBody: pageBody(false, vendorBloc, context, vendor),
-            context: context);
+                navTitle: '',
+                pageBody: pageBody(false, vendorBloc, context, vendor),
+                context: context);
       },
     );
   }
@@ -111,12 +111,12 @@ class _EditVendorState extends State<EditVendor> {
             builder: (context, snapshot) {
               return AppTextField(
                 hintText: 'Vendor Name',
-                cupertinoIcon: FontAwesomeIcons.shoppingBasket,
-                materialIcon: FontAwesomeIcons.shoppingBasket,
+                cupertinoIcon: FontAwesomeIcons.sign,
+                materialIcon: FontAwesomeIcons.sign,
                 isIOS: isIOS,
                 errorText: snapshot.error,
                 initialText:
-                (existingVendor != null) ? existingVendor.name : null,
+                    (existingVendor != null) ? existingVendor.name : null,
                 onChanged: vendorBloc.changeName,
               );
             }),
@@ -125,8 +125,9 @@ class _EditVendorState extends State<EditVendor> {
             builder: (context, snapshot) {
               return AppTextField(
                 hintText: 'Description',
-                cupertinoIcon: FontAwesomeIcons.shoppingBasket,
-                materialIcon: FontAwesomeIcons.shoppingBasket,
+                maxLines: 7,
+                cupertinoIcon: FontAwesomeIcons.book,
+                materialIcon: FontAwesomeIcons.book,
                 isIOS: isIOS,
                 errorText: snapshot.error,
                 initialText: (existingVendor != null)
@@ -141,10 +142,10 @@ class _EditVendorState extends State<EditVendor> {
             return (!snapshot.hasData || snapshot.data == false)
                 ? Container()
                 : Center(
-              child: (Platform.isIOS)
-                  ? CupertinoActivityIndicator()
-                  : CircularProgressIndicator(),
-            );
+                    child: (Platform.isIOS)
+                        ? CupertinoActivityIndicator()
+                        : CircularProgressIndicator(),
+                  );
           },
         ),
         StreamBuilder<String>(
