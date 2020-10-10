@@ -4,6 +4,10 @@ import 'dart:io';
 
 import 'package:provider/provider.dart';
 import 'package:smartfarmer/src/blocs/auth_bloc.dart';
+import 'package:smartfarmer/src/blocs/vendor_bloc.dart';
+import 'package:smartfarmer/src/models/vendor.dart';
+import 'package:smartfarmer/src/styles/colors.dart';
+import 'package:smartfarmer/src/widgets/button.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -21,26 +25,45 @@ class Profile extends StatelessWidget {
 
   Widget pageBody(BuildContext context) {
     var authBloc = Provider.of<AuthBloc>(context);
-    // return Center(
-    //     child: (Platform.isIOS)
-    //         ? CupertinoButton(
-    //             child: Text('Logout'),
-    //             onPressed: () => authBloc.logout(),
-    //           )
-    //         : FlatButton(
-    //             child: Text('Logout'),
-    //             onPressed: () => authBloc.logout(),
-    //           ));
+    var vendorBloc = Provider.of<VendorBloc>(context);
 
-    return Center(
-        child: (Platform.isIOS)
-            ? CupertinoButton(
-          child: Text('Add'),
-          onPressed: () => Navigator.of(context).pushNamed('/editvendor') ,
-        )
-            : FlatButton(
-          child: Text('Add'),
-          onPressed: () => Navigator.of(context).pushNamed('/editvendor'),
-        ));
+    return StreamBuilder<Vendor>(
+        stream: vendorBloc.vendor,
+        builder: (context, snapshot) {
+          return Column(
+            children: [
+              Expanded(
+                  child: (snapshot.data != null)
+                      ? ListView(
+                          children: [],
+                        )
+                      : Center(
+                          child: AppButton(
+                            buttonText: 'Create Vendor profile',
+                            buttonType: ButtonType.LightBlue,
+                            onPressed: () =>
+                                Navigator.of(context).pushNamed('/editvendor'),
+                          ),
+                        )),
+              Container(
+                  height: 50.0,
+                  child: (Platform.isIOS)
+                      ? CupertinoButton(
+                          child: Text(
+                            'Logout',
+                            style: TextStyle(color: AppColors.lightblue),
+                          ),
+                          onPressed: () => authBloc.logout(),
+                        )
+                      : FlatButton(
+                          child: Text(
+                            'Logout',
+                            style: TextStyle(color: AppColors.lightblue),
+                          ),
+                          onPressed: () => authBloc.logout(),
+                        ))
+            ],
+          );
+        });
   }
 }
